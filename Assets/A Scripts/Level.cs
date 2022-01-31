@@ -16,4 +16,7 @@ public class Level : ScriptableObject
     public int totalTileCount;
     public int enemyCount;
 
+    public GameObject firstEnemyBlock;
+    public GameObject secondEnemyBlock;
+
 }

@@ -19,3 +19,7 @@ MonoBehaviour:
   enemyPosition2: {x: 0, y: 0}
   totalTileCount: 51
   enemyCount: 1
+  firstEnemyBlock: {fileID: 5611200191537552564, guid: 8c5b8f5ee6e49314d98af98c6c170b3d,
+    type: 3}
+  secondEnemyBlock: {fileID: 5611200191537552564, guid: 11220720cd15bb548a19c017dd7467dd,
+    type: 3}

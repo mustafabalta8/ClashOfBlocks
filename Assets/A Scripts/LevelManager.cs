@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
-{
-    [SerializeField] private Enemy firstEnemy;
+{  
     private MapGenerator mapGenerator;
     public static LevelManager instance;
 
@@ -14,12 +13,15 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject environment;
     [SerializeField] private GameObject tileHolder;
     public GameObject blockKeeper;
+    [SerializeField] private Enemy firstEnemy;
     [SerializeField] private GameObject secondEnemy;
+    [SerializeField] private GameObject secondEnemyBlock;
+    [SerializeField] private GameObject firstEnemyBlock;
 
     [Header("Levels Array")]
     [SerializeField] private Level[] levels;
 
-    
+    //private GameObject secondEnemy;
 
     private int levelIndex = 0;
     private void Awake()
@@ -29,6 +31,9 @@ public class LevelManager : MonoBehaviour
         if (instance == null) { instance = this; }
 
         CreateLevel(0);
+
+        firstEnemy.EnemyBlock = firstEnemyBlock;
+        secondEnemy.GetComponent<Enemy>().EnemyBlock = secondEnemyBlock;
     }
     public void StartSpreadingEnemyBlocks()
     {
@@ -48,15 +53,27 @@ public class LevelManager : MonoBehaviour
 
 
         firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);
+        
+
         mapGenerator.mapSize = levels[index].mapSize;
         mapGenerator.GenerateMap();
-
-        if (levels[index].enemyCount == 2)
+        if (levels[index].enemyCount == 1)
         {
-            Instantiate(secondEnemy, new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y),
-                Quaternion.identity, tileHolder.transform);
+            secondEnemy.SetActive(false);
         }
-    
+          if (levels[index].enemyCount == 2)
+        {
+            /*GameObject secondEnemy = Instantiate(secondEnemyPrefab, new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y),
+                Quaternion.identity, tileHolder.transform);
+            secondEnemy.GetComponent<Enemy>().EnemyBlock = secondEnemyBlock;
+            secondEnemy.GetComponent<Enemy>().blockKeeper = blockKeeper;
+             
+             */
+            secondEnemy.SetActive(true);
+            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
+
+        }
+
     }
     public void OpenWinningUI()
     {

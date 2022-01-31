@@ -4,21 +4,28 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] GameObject enemyBlock;
-    private GameObject blockKeeper;
+    public GameObject EnemyBlock { set; get; }
+    GameObject blockKeeper;
     private void Awake()
     {
         blockKeeper = GameObject.Find("BlockKeeper");
     }
     private void Start()
     {
-        
+        if (blockKeeper == null)
+        {
+            Debug.LogWarning("blockKeeper == null");
+        }
+        else
+        {
+            Debug.LogWarning("blockKeeper is not null");
+        }
     }
 
     public void StartSpreadingBlocks()
     {
         Debug.Log($"{gameObject.name} is started");
-        Instantiate(enemyBlock, transform.position + new Vector3(0, 0.25f, 0), Quaternion.identity,
+        Instantiate(EnemyBlock, transform.position + new Vector3(0, 0.25f, 0), Quaternion.identity,
             blockKeeper.transform);//LevelManager.instance.blockKeeper
     }
 }

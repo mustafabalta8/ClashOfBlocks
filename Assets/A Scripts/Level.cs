@@ -8,15 +8,16 @@ public class Level : ScriptableObject
 {
     public GameObject levelWalls;
 
+    [Header("Statistics")]
     public Vector2 mapSize;
-
-    public Vector2 enemyPosition1;
-    public Vector2 enemyPosition2;
-
     public int totalTileCount;
     public int enemyCount;
 
-    public GameObject firstEnemyBlock;
-    public GameObject secondEnemyBlock;
+    [Header("Enemies")]
+    public Vector2 enemyPosition1;
+    public Vector2 enemyPosition2;
+    public Vector2 enemyPosition3;
+    public Vector2 enemyPosition4;
+
 
 }

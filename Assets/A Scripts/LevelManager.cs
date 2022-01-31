@@ -38,10 +38,21 @@ public class LevelManager : MonoBehaviour
     public void StartSpreadingEnemyBlocks()
     {
         firstEnemy.StartSpreadingBlocks();
+
         if (levels[levelIndex].enemyCount == 2)
         {
-            //Debug.Log("enemy count 2");
             secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+        }
+        else if (levels[levelIndex].enemyCount == 3)
+        {
+            secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            thirdEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+        }
+        else if (levels[levelIndex].enemyCount == 4)
+        {
+            secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            thirdEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            fourthEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
         }
 
     }
@@ -62,7 +73,7 @@ public class LevelManager : MonoBehaviour
             thirdEnemy.SetActive(false);
             fourthEnemy.SetActive(false);
         }
-          if (levels[index].enemyCount == 2)
+        else if (levels[index].enemyCount == 2)
         {
             secondEnemy.SetActive(true);
             thirdEnemy.SetActive(false);
@@ -70,13 +81,22 @@ public class LevelManager : MonoBehaviour
             secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
 
         }
-        if (levels[index].enemyCount == 3)
+        else if (levels[index].enemyCount == 3)
         {
             secondEnemy.SetActive(true);
             thirdEnemy.SetActive(true);
             fourthEnemy.SetActive(false);
             secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
-            //thirdEnemy.transform.position= new Vector3(levels)
+            thirdEnemy.transform.position= new Vector3(levels[index].enemyPosition3.x, 0, levels[index].enemyPosition3.y);
+        }
+        else if (levels[index].enemyCount == 4)
+        {
+            secondEnemy.SetActive(true);
+            thirdEnemy.SetActive(true);
+            fourthEnemy.SetActive(true);
+            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
+            thirdEnemy.transform.position = new Vector3(levels[index].enemyPosition3.x, 0, levels[index].enemyPosition3.y);
+            fourthEnemy.transform.position = new Vector3(levels[index].enemyPosition4.x, 0, levels[index].enemyPosition4.y);
         }
 
     }

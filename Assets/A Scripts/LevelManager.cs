@@ -12,11 +12,14 @@ public class LevelManager : MonoBehaviour
     [Header("Level Environment")]
     [SerializeField] private GameObject environment;
     [SerializeField] private GameObject tileHolder;
-    public GameObject blockKeeper;
+    [SerializeField] private GameObject blockKeeper;
+
+    [Header("Enemies")]
     [SerializeField] private Enemy firstEnemy;
     [SerializeField] private GameObject secondEnemy;
-    [SerializeField] private GameObject secondEnemyBlock;
-    [SerializeField] private GameObject firstEnemyBlock;
+    [SerializeField] private GameObject thirdEnemy;
+    [SerializeField] private GameObject fourthEnemy;
+
 
     [Header("Levels Array")]
     [SerializeField] private Level[] levels;
@@ -31,8 +34,6 @@ public class LevelManager : MonoBehaviour
 
         CreateLevel(0);
 
-        firstEnemy.EnemyBlock = firstEnemyBlock;
-        secondEnemy.GetComponent<Enemy>().EnemyBlock = secondEnemyBlock;
     }
     public void StartSpreadingEnemyBlocks()
     {
@@ -51,26 +52,31 @@ public class LevelManager : MonoBehaviour
         levelEnviroment.transform.SetParent(environment.transform);
 
 
-        firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);
-        
+        firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);        
 
         mapGenerator.mapSize = levels[index].mapSize;
         mapGenerator.GenerateMap();
         if (levels[index].enemyCount == 1)
         {
             secondEnemy.SetActive(false);
+            thirdEnemy.SetActive(false);
+            fourthEnemy.SetActive(false);
         }
           if (levels[index].enemyCount == 2)
         {
-            /*GameObject secondEnemy = Instantiate(secondEnemyPrefab, new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y),
-                Quaternion.identity, tileHolder.transform);
-            secondEnemy.GetComponent<Enemy>().EnemyBlock = secondEnemyBlock;
-            secondEnemy.GetComponent<Enemy>().blockKeeper = blockKeeper;
-             
-             */
             secondEnemy.SetActive(true);
+            thirdEnemy.SetActive(false);
+            fourthEnemy.SetActive(false);
             secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
 
+        }
+        if (levels[index].enemyCount == 3)
+        {
+            secondEnemy.SetActive(true);
+            thirdEnemy.SetActive(true);
+            fourthEnemy.SetActive(false);
+            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
+            //thirdEnemy.transform.position= new Vector3(levels)
         }
 
     }
@@ -78,12 +84,20 @@ public class LevelManager : MonoBehaviour
     {
         winnigUI.SetActive(true);
     }
+
     public void OpenNextLevel()
     {
         winnigUI.SetActive(false);
-        Debug.Log("button clicked");
-        //delete previous level
-        foreach(Transform child in environment.transform)
+        DeletePreviousLevel();
+
+        //create next one
+        levelIndex++;
+        CreateLevel(levelIndex);
+    }
+
+    private void DeletePreviousLevel()
+    {
+        foreach (Transform child in environment.transform)
         {
             Destroy(child.gameObject);
         }
@@ -96,8 +110,5 @@ public class LevelManager : MonoBehaviour
             Destroy(child.gameObject);
         }
 
-        //create next one
-        levelIndex++;
-        CreateLevel(levelIndex);
     }
 }

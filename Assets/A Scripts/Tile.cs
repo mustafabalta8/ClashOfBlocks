@@ -6,7 +6,7 @@ public class Tile : MonoBehaviour
 {
     private bool isFilled = false;
 
-    [SerializeField] GameObject block;
+    [SerializeField] private GameObject block;
     public static int FilledTileCount{ set; get; }
     public static int TotalTileCount { set; get; }
 

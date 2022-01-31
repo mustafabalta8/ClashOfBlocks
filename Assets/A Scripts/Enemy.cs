@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    public GameObject EnemyBlock { set; get; }
+    [SerializeField] GameObject enemyBlock;
     GameObject blockKeeper;
     private void Start()
     {
@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public void StartSpreadingBlocks()
     {
         //Debug.Log($"{gameObject.name} is started");
-        Instantiate(EnemyBlock, transform.position + new Vector3(0, 0.25f, 0), Quaternion.identity,
+        Instantiate(enemyBlock, transform.position + new Vector3(0, 0.25f, 0), Quaternion.identity,
             blockKeeper.transform);//LevelManager.instance.blockKeeper
     }
 }

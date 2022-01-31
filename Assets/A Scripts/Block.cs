@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Block : MonoBehaviour
 {
-    [SerializeField] GameObject block;
+    [SerializeField] private GameObject block;
     [SerializeField] private float raycastDistance = 1f;
 
     private GameObject blockKeeper;

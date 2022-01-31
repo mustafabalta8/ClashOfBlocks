@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1aeb5dd801f9ba342a703a96203a9f9f, type: 3}
   m_Name: Level 3
   m_EditorClassIdentifier: 
-  levelWalls: {fileID: 1346802049022705344, guid: 966e9734af8085345b8fc7f659f5b9df,
+  levelWalls: {fileID: 8631042285052564515, guid: 7747c1957f14b484c934adefe20d032a,
     type: 3}
-  mapSize: {x: 12, y: 12}
-  enemyPosition1: {x: 12, y: 11}
-  enemyPosition2: {x: 2, y: 2}
-  totalTileCount: 108
+  mapSize: {x: 9, y: 9}
+  enemyPosition1: {x: 1, y: 1}
+  enemyPosition2: {x: 9, y: 1}
+  totalTileCount: 45
   enemyCount: 2
   firstEnemyBlock: {fileID: 5611200191537552564, guid: 8c5b8f5ee6e49314d98af98c6c170b3d,
     type: 3}

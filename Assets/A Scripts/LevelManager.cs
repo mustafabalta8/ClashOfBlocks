@@ -21,7 +21,6 @@ public class LevelManager : MonoBehaviour
     [Header("Levels Array")]
     [SerializeField] private Level[] levels;
 
-    //private GameObject secondEnemy;
 
     private int levelIndex = 0;
     private void Awake()
@@ -40,7 +39,7 @@ public class LevelManager : MonoBehaviour
         firstEnemy.StartSpreadingBlocks();
         if (levels[levelIndex].enemyCount == 2)
         {
-            Debug.Log("enemy count 2");
+            //Debug.Log("enemy count 2");
             secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
         }
 

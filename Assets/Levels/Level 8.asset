@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aeb5dd801f9ba342a703a96203a9f9f, type: 3}
+  m_Name: Level 8
+  m_EditorClassIdentifier: 
+  levelWalls: {fileID: 552907427454877987, guid: 506c6844a16dda748955e0559945c521,
+    type: 3}
+  mapSize: {x: 13, y: 15}
+  totalTileCount: 122
+  enemyCount: 1
+  enemyPosition1: {x: 7, y: 2}
+  enemyPosition2: {x: 0, y: 0}
+  enemyPosition3: {x: 0, y: 0}
+  enemyPosition4: {x: 0, y: 0}

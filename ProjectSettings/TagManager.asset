@@ -8,6 +8,8 @@ TagManager:
   - Tile
   - Wall
   - Enemy
+  - RedEnemy
+  - YellowEnemy
   layers:
   - Default
   - TransparentFX

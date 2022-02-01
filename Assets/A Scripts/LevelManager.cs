@@ -8,7 +8,9 @@ public class LevelManager : MonoBehaviour
     private MapGenerator mapGenerator;
     public static LevelManager instance;
     [Header("UI")]
-    [SerializeField] private GameObject winnigUI;   
+    [SerializeField] private GameObject winUI;
+    [SerializeField] private GameObject loseUI;
+    [SerializeField] private Text levelText;
 
     [Header("Level Environment")]
     [SerializeField] private GameObject environment;
@@ -63,17 +65,47 @@ public class LevelManager : MonoBehaviour
         }
 
     }
+
+    public void RestartLevel()
+    {
+        DeletePreviousLevel();
+        CreateLevel(levelIndex);
+        loseUI.SetActive(false);
+    }
+
+    public void OpenWinningUI()
+    {
+        winUI.SetActive(true);
+    }
+    public void OpenLosegUI()
+    {
+        loseUI.SetActive(true);
+    }
+    public void OpenNextLevel()
+    {
+        winUI.SetActive(false);
+        loseUI.SetActive(false);
+        DeletePreviousLevel();
+
+        //create next level
+        levelIndex++;
+        CreateLevel(levelIndex);
+    }
     private void CreateLevel(int index)
     {
+        levelText.text = "Level " + (levelIndex + 1);
         Tile.TotalTileCount = levels[index].totalTileCount;
+
+        //instantiate walls
         GameObject levelEnviroment = Instantiate(levels[index].levelWalls, new Vector3(0, 0.4f, 0), Quaternion.identity);
-        levelEnviroment.transform.SetParent(environment.transform);
+        levelEnviroment.transform.SetParent(environment.transform);         
 
-
-        firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);        
-
+        //Generate Tiles
         mapGenerator.mapSize = levels[index].mapSize;
         mapGenerator.GenerateMap();
+
+        //Set enemy positions 
+        firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);
         if (levels[index].enemyCount == 1)
         {
             secondEnemy.SetActive(false);
@@ -121,22 +153,7 @@ public class LevelManager : MonoBehaviour
         playerPercentUI.SetActive(true);
         playerPercentUI.transform.GetChild(1).GetComponent<Text>().text = playerPercent + "%";
 
-    }
-    public void OpenWinningUI()
-    {
-        winnigUI.SetActive(true);
-    }
-
-    public void OpenNextLevel()
-    {
-        winnigUI.SetActive(false);
-        DeletePreviousLevel();
-
-        //create next one
-        levelIndex++;
-        CreateLevel(levelIndex);
-    }
-
+    }    
     private void DeletePreviousLevel()
     {
         firstEnemyUI.SetActive(false);

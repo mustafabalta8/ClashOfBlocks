@@ -93,7 +93,16 @@ public class Tile : MonoBehaviour
 
 
         Debug.LogWarning($"level ended\nFilledTileCount: {FilledTileCount}");
-        LevelManager.instance.OpenWinningUI();
+
+        if(playerPercent > redEnemyPercent && playerPercent > yellowEnemyPercent)
+        {
+            LevelManager.instance.OpenWinningUI();
+        }
+        else
+        {
+            LevelManager.instance.OpenLosegUI();
+        }
+        
         FilledTileCount = 0;
         playerBlockCount = 0;
         redEnemyBlockCount = 0;

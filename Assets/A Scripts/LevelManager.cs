@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour
 {  
     private MapGenerator mapGenerator;
     public static LevelManager instance;
-
-    [SerializeField] private GameObject winnigUI;
+    [Header("UI")]
+    [SerializeField] private GameObject winnigUI;   
 
     [Header("Level Environment")]
     [SerializeField] private GameObject environment;
@@ -19,13 +20,19 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject secondEnemy;
     [SerializeField] private GameObject thirdEnemy;
     [SerializeField] private GameObject fourthEnemy;
-
+    [Header("Percentage UIs")]
+    [SerializeField] private GameObject playerPercentUI;
+    [SerializeField] private GameObject firstEnemyUI;
+    [SerializeField] private GameObject secondEnemyUI;
+    [SerializeField] private GameObject thirdEnemyUI;
+    [SerializeField] private GameObject fourthEnemyUI;
 
     [Header("Levels Array")]
     [SerializeField] private Level[] levels;
 
 
     private int levelIndex = 0;
+    private Vector3 playerUIOffset = new Vector3(0, 1.35f, 1.2f);
     private void Awake()
     {
         mapGenerator = GetComponent<MapGenerator>();
@@ -100,6 +107,21 @@ public class LevelManager : MonoBehaviour
         }
 
     }
+
+    
+    public void ShowPercentsUI(int firstEnemyPercent, int secondEnemyPercent, int playerPercent, Vector3 playerUI_Pos )
+    {
+        firstEnemyUI.SetActive(true);
+        firstEnemyUI.transform.GetChild(1).GetComponent<Text>().text = firstEnemyPercent + "%";
+
+        secondEnemyUI.SetActive(true);
+        secondEnemyUI.transform.GetChild(1).GetComponent<Text>().text = secondEnemyPercent + "%";
+
+        playerPercentUI.transform.position = playerUI_Pos + playerUIOffset;
+        playerPercentUI.SetActive(true);
+        playerPercentUI.transform.GetChild(1).GetComponent<Text>().text = playerPercent + "%";
+
+    }
     public void OpenWinningUI()
     {
         winnigUI.SetActive(true);
@@ -117,6 +139,13 @@ public class LevelManager : MonoBehaviour
 
     private void DeletePreviousLevel()
     {
+        firstEnemyUI.SetActive(false);
+        secondEnemyUI.SetActive(false);
+        thirdEnemyUI.SetActive(false); 
+        fourthEnemyUI.SetActive(false);
+        playerPercentUI.SetActive(false);
+
+
         foreach (Transform child in environment.transform)
         {
             Destroy(child.gameObject);

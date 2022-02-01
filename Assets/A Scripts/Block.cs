@@ -23,32 +23,32 @@ public class Block : MonoBehaviour
 
         if(Physics.Raycast(transform.position,Vector3.right,out other, raycastDistance))
         {
-            if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
-            else if (other.collider.gameObject.tag == "Tile")
+            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
+            if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.right, Quaternion.identity, blockKeeper.transform);
             }
         }
         if (Physics.Raycast(transform.position, Vector3.left, out other, raycastDistance))
         {
-            if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
-            else if (other.collider.gameObject.tag == "Tile")
+            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
+            if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.left, Quaternion.identity, blockKeeper.transform);
             }
         }
         if (Physics.Raycast(transform.position, Vector3.forward, out other, raycastDistance))
         {
-            if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
-            else if (other.collider.gameObject.tag == "Tile")
+            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
+            if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.forward, Quaternion.identity, blockKeeper.transform);
             }
         }
         if (Physics.Raycast(transform.position, Vector3.back, out other, raycastDistance))
         {
-            if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
-            else if (other.collider.gameObject.tag == "Tile")
+            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
+             if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.back, Quaternion.identity, blockKeeper.transform);
             }

@@ -1034,7 +1034,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.98039216, g: 0.92941177, b: 0.60784316, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -2203,7 +2203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e378f169462289c4a967b3768277b183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camera: {fileID: 963194228}
+  mainCamera: {fileID: 963194228}
   winUI: {fileID: 395309689}
   loseUI: {fileID: 1609145251}
   levelText: {fileID: 1453897382}

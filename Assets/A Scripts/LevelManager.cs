@@ -7,6 +7,9 @@ public class LevelManager : MonoBehaviour
 {  
     private MapGenerator mapGenerator;
     public static LevelManager instance;
+
+    [SerializeField] private Transform mainCamera;
+
     [Header("UI")]
     [SerializeField] private GameObject winUI;
     [SerializeField] private GameObject loseUI;
@@ -44,6 +47,8 @@ public class LevelManager : MonoBehaviour
         CreateLevel(0);
 
     }
+    
+
     public void StartSpreadingEnemyBlocks()
     {
         firstEnemy.StartSpreadingBlocks();
@@ -66,6 +71,7 @@ public class LevelManager : MonoBehaviour
 
     }
 
+
     public void RestartLevel()
     {
         DeletePreviousLevel();
@@ -77,7 +83,7 @@ public class LevelManager : MonoBehaviour
     {
         winUI.SetActive(true);
     }
-    public void OpenLosegUI()
+    public void OpenLoseUI()
     {
         loseUI.SetActive(true);
     }
@@ -95,6 +101,11 @@ public class LevelManager : MonoBehaviour
     {
         levelText.text = "Level " + (levelIndex + 1);
         Tile.TotalTileCount = levels[index].totalTileCount;
+
+        //set camera position
+        //  (x/2 +0.5), x*2
+        mainCamera.position = new Vector3((levels[index].mapSize.x/2+0.5f), levels[index].mapSize.x*2, 0);
+
 
         //instantiate walls
         GameObject levelEnviroment = Instantiate(levels[index].levelWalls, new Vector3(0, 0.4f, 0), Quaternion.identity);

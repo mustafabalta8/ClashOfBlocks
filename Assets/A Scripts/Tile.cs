@@ -85,9 +85,9 @@ public class Tile : MonoBehaviour
         int redEnemyPercent = 100 * redEnemyBlockCount / TotalTileCount;
         int yellowEnemyPercent = 100 * yellowEnemyBlockCount / TotalTileCount;
 
-        Debug.Log("playerBlockCount" + playerBlockCount);
+       // Debug.Log("playerBlockCount" + playerBlockCount);
        // Debug.Log("enemyBlockCount" + redEnemyBlockCount);
-        Debug.Log("playerPercent" + playerPercent);
+       // Debug.Log("playerPercent" + playerPercent);
        // print("enemyPercent" + redEnemyPercent);
         LevelManager.instance.ShowPercentsUI(redEnemyPercent, yellowEnemyPercent,playerPercent,playerStartingPosition);
 
@@ -96,11 +96,12 @@ public class Tile : MonoBehaviour
 
         if(playerPercent > redEnemyPercent && playerPercent > yellowEnemyPercent)
         {
-            LevelManager.instance.OpenWinningUI();
+            Invoke("OpenWinUI", 0.3f);
+
         }
         else
         {
-            LevelManager.instance.OpenLosegUI();
+            Invoke("OpenLoseUI", 0.3f);
         }
         
         FilledTileCount = 0;
@@ -108,4 +109,14 @@ public class Tile : MonoBehaviour
         redEnemyBlockCount = 0;
         yellowEnemyBlockCount = 0;
     }
+    
+    private void OpenWinUI()
+    {
+        LevelManager.instance.OpenWinningUI();
+    }
+    private void OpenLoseUI()
+    {
+        LevelManager.instance.OpenLoseUI();
+    }
+
 }

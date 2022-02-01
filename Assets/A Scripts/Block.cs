@@ -22,8 +22,7 @@ public class Block : MonoBehaviour
         RaycastHit other;
 
         if(Physics.Raycast(transform.position,Vector3.right,out other, raycastDistance))
-        {
-            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
+        {           
             if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.right, Quaternion.identity, blockKeeper.transform);
@@ -31,7 +30,6 @@ public class Block : MonoBehaviour
         }
         if (Physics.Raycast(transform.position, Vector3.left, out other, raycastDistance))
         {
-            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") {  }
             if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.left, Quaternion.identity, blockKeeper.transform);
@@ -39,7 +37,6 @@ public class Block : MonoBehaviour
         }
         if (Physics.Raycast(transform.position, Vector3.forward, out other, raycastDistance))
         {
-            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
             if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.forward, Quaternion.identity, blockKeeper.transform);
@@ -47,7 +44,6 @@ public class Block : MonoBehaviour
         }
         if (Physics.Raycast(transform.position, Vector3.back, out other, raycastDistance))
         {
-            //if (other.collider.gameObject.tag == "Enemy" || other.collider.gameObject.tag == "Block") { }
              if (other.collider.gameObject.tag == "Tile")
             {
                 Instantiate(block, transform.position + Vector3.back, Quaternion.identity, blockKeeper.transform);
@@ -55,7 +51,8 @@ public class Block : MonoBehaviour
         }
 
 
-    }/*
+    }
+    /*
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -64,20 +61,6 @@ public class Block : MonoBehaviour
         Gizmos.DrawRay(transform.position, Vector3.left);
         Gizmos.DrawRay(transform.position, Vector3.back);
     }*/
-
-    /*
-    private void OnTriggerEnter(Collider other)
-    {       
-        if (other.gameObject.tag == "Wall")
-        {
-            Destroy(gameObject);
-        }      
-    
-    }*/
-
-
-
-
 
 
 }

@@ -12,9 +12,9 @@ public class Tile : MonoBehaviour
 
     private GameObject blockKeeper;
 
-    private static int playerBlockCount=0;
-    private static int redEnemyBlockCount=0;
-    private static int yellowEnemyBlockCount = 0;
+    public static int PlayerBlockCount { set; get; }
+    public static int RedEnemyBlockCount { set; get; }
+    public static int YellowEnemyBlockCount { set; get; }
 
     private static Vector3 playerStartingPosition;
     private void Start()
@@ -25,8 +25,7 @@ public class Tile : MonoBehaviour
     {
         //Debug.Log($"Tile is triggerred by tag = {other.gameObject.tag} ");
         if (other.gameObject.tag == "Wall")
-        {
-            print("Tile is destroyed by wall");
+        {            
             Destroy(gameObject);
         }
 
@@ -54,21 +53,21 @@ public class Tile : MonoBehaviour
     {
         if (other.gameObject.tag == "Block" || other.gameObject.tag == "RedEnemy" || other.gameObject.tag == "YellowEnemy")
         {
-            Debug.Log("Block isFilled = true");
+            //Debug.Log("Block isFilled = true"); // -> important to count TotalTileCount 
             isFilled = true;
             FilledTileCount += 1;
-            Debug.Log("other.gameObject.tag: "+ other.gameObject.tag);
+            //Debug.Log("other.gameObject.tag: "+ other.gameObject.tag);
             if (other.gameObject.tag == "Block")
             {
-                playerBlockCount++;
+                PlayerBlockCount++;
             }
             else if (other.gameObject.tag == "RedEnemy")
             {
-                redEnemyBlockCount++;
+                RedEnemyBlockCount++;
             }
             else if (other.gameObject.tag == "YellowEnemy")
             {
-                yellowEnemyBlockCount++;
+                YellowEnemyBlockCount++;
             }
 
 
@@ -81,18 +80,16 @@ public class Tile : MonoBehaviour
     }
     private void CompleteTheLevel()
     {
-        int playerPercent = 100 * playerBlockCount / TotalTileCount;
-        int redEnemyPercent = 100 * redEnemyBlockCount / TotalTileCount;
-        int yellowEnemyPercent = 100 * yellowEnemyBlockCount / TotalTileCount;
+        int playerPercent = 100 * PlayerBlockCount / TotalTileCount;
+        int redEnemyPercent = 100 * RedEnemyBlockCount / TotalTileCount;
+        int yellowEnemyPercent = 100 * YellowEnemyBlockCount / TotalTileCount;
+        // Debug.Log("playerPercent" + playerPercent);
+        // print("redEnemyPercent" + redEnemyPercent);
 
-       // Debug.Log("playerBlockCount" + playerBlockCount);
-       // Debug.Log("enemyBlockCount" + redEnemyBlockCount);
-       // Debug.Log("playerPercent" + playerPercent);
-       // print("enemyPercent" + redEnemyPercent);
         LevelManager.instance.ShowPercentsUI(redEnemyPercent, yellowEnemyPercent,playerPercent,playerStartingPosition);
 
 
-        Debug.LogWarning($"level ended\nFilledTileCount: {FilledTileCount}");
+        //Debug.LogWarning($"level ended\nFilledTileCount: {FilledTileCount}");
 
         if(playerPercent > redEnemyPercent && playerPercent > yellowEnemyPercent)
         {
@@ -105,10 +102,12 @@ public class Tile : MonoBehaviour
         }
         
         FilledTileCount = 0;
-        playerBlockCount = 0;
-        redEnemyBlockCount = 0;
-        yellowEnemyBlockCount = 0;
+        PlayerBlockCount = 0;
+        RedEnemyBlockCount = 0;
+        YellowEnemyBlockCount = 0;
     }
+
+    
     
     private void OpenWinUI()
     {

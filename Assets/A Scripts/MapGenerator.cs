@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class MapGenerator : MonoBehaviour
 {
-	public Transform tilePrefab;
-	public Vector2 mapSize;
+	
+	public Vector2 MapSize { set; get; }
 
-	[Range(0, 1)]
-	public float outlinePercent;
+	[Header("Tile Info")]
 
-	[SerializeField] Transform tileHolder;
+	[Range(0, 1)] [SerializeField] private float outlinePercent;
+	[SerializeField] private Transform tilePrefab;
+	[SerializeField] private Transform tileHolder;
 	public static MapGenerator instance;
 
-	//public static int TileCount { set; get; }
 	void Start()
 	{
         if (instance == null)
@@ -21,20 +21,12 @@ public class MapGenerator : MonoBehaviour
 			instance = this;
         }
 	}	
-	public void GenerateMap()
+	public void GenerateTiles()
 	{
-		/*
-		string holderName = "Generated Map";
-		if (transform.Find(holderName))
-		{
-			DestroyImmediate(transform.Find(holderName).gameObject);
-		}
-	    mapHolder = new GameObject(holderName).transform;
-		mapHolder.parent = transform;*/
 
-		for (int x = 0; x < mapSize.x; x++)
+		for (int x = 0; x < MapSize.x; x++)
 		{
-			for (int y = 0; y < mapSize.y; y++)
+			for (int y = 0; y < MapSize.y; y++)
 			{
 				Vector3 tilePosition = new Vector3( (x+1), 0, (y+1));
 				Transform newTile = Instantiate(tilePrefab, tilePosition,Quaternion.identity) as Transform;

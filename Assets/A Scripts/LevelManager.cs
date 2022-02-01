@@ -37,14 +37,14 @@ public class LevelManager : MonoBehaviour
 
 
     private int levelIndex = 0;
-    private Vector3 playerUIOffset = new Vector3(0, 1.35f, 1.2f);
+    private Vector3 playerUI_Offset = new Vector3(0, 1.35f, 1.2f);
     private void Awake()
     {
         mapGenerator = GetComponent<MapGenerator>();
 
         if (instance == null) { instance = this; }
 
-        CreateLevel(0);
+        CreateLevel();
 
     }
     
@@ -75,8 +75,12 @@ public class LevelManager : MonoBehaviour
     public void RestartLevel()
     {
         DeletePreviousLevel();
-        CreateLevel(levelIndex);
+        CreateLevel();
         loseUI.SetActive(false);
+        Tile.FilledTileCount = 0;
+        Tile.PlayerBlockCount = 0;
+        Tile.RedEnemyBlockCount = 0;
+        Tile.YellowEnemyBlockCount = 0;
     }
 
     public void OpenWinningUI()
@@ -94,61 +98,63 @@ public class LevelManager : MonoBehaviour
         DeletePreviousLevel();
 
         //create next level
-        levelIndex++;
-        CreateLevel(levelIndex);
+        if (levelIndex == 9) { levelIndex = -1; }
+        levelIndex++;      
+        CreateLevel();
     }
-    private void CreateLevel(int index)
+    private void CreateLevel()
     {
         levelText.text = "Level " + (levelIndex + 1);
-        Tile.TotalTileCount = levels[index].totalTileCount;
+        Tile.TotalTileCount = levels[levelIndex].totalTileCount;
 
         //set camera position
         //  (x/2 +0.5), x*2
-        mainCamera.position = new Vector3((levels[index].mapSize.x/2+0.5f), levels[index].mapSize.x*2, 0);
-
+        mainCamera.position = new Vector3((levels[levelIndex].mapSize.x/2+0.5f), levels[levelIndex].mapSize.x*2, 0);
 
         //instantiate walls
-        GameObject levelEnviroment = Instantiate(levels[index].levelWalls, new Vector3(0, 0.4f, 0), Quaternion.identity);
+        GameObject levelEnviroment = Instantiate(levels[levelIndex].levelWalls, new Vector3(0, 0.4f, 0), Quaternion.identity);
         levelEnviroment.transform.SetParent(environment.transform);         
 
         //Generate Tiles
-        mapGenerator.mapSize = levels[index].mapSize;
-        mapGenerator.GenerateMap();
+        mapGenerator.MapSize = levels[levelIndex].mapSize;
+        mapGenerator.GenerateTiles();
 
         //Set enemy positions 
-        firstEnemy.transform.position = new Vector3(levels[index].enemyPosition1.x, 0, levels[index].enemyPosition1.y);
-        if (levels[index].enemyCount == 1)
-        {
-            secondEnemy.SetActive(false);
-            thirdEnemy.SetActive(false);
-            fourthEnemy.SetActive(false);
-        }
-        else if (levels[index].enemyCount == 2)
-        {
-            secondEnemy.SetActive(true);
-            thirdEnemy.SetActive(false);
-            fourthEnemy.SetActive(false);
-            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
+        SetEnemyPositions();
 
-        }
-        else if (levels[index].enemyCount == 3)
+    }
+    private void SetEnemyPositions()
+    {
+        firstEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition1.x, 0, levels[levelIndex].enemyPosition1.y);
+        switch (levels[levelIndex].enemyCount)
         {
-            secondEnemy.SetActive(true);
-            thirdEnemy.SetActive(true);
-            fourthEnemy.SetActive(false);
-            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
-            thirdEnemy.transform.position= new Vector3(levels[index].enemyPosition3.x, 0, levels[index].enemyPosition3.y);
+            case 1:
+                secondEnemy.SetActive(false);
+                thirdEnemy.SetActive(false);
+                fourthEnemy.SetActive(false);
+                break;
+            case 2:
+                secondEnemy.SetActive(true);
+                thirdEnemy.SetActive(false);
+                fourthEnemy.SetActive(false);
+                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
+                break;
+            case 3:
+                secondEnemy.SetActive(true);
+                thirdEnemy.SetActive(true);
+                fourthEnemy.SetActive(false);
+                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
+                thirdEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition3.x, 0, levels[levelIndex].enemyPosition3.y);
+                break;
+            case 4:
+                secondEnemy.SetActive(true);
+                thirdEnemy.SetActive(true);
+                fourthEnemy.SetActive(true);
+                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
+                thirdEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition3.x, 0, levels[levelIndex].enemyPosition3.y);
+                fourthEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition4.x, 0, levels[levelIndex].enemyPosition4.y);
+                break;
         }
-        else if (levels[index].enemyCount == 4)
-        {
-            secondEnemy.SetActive(true);
-            thirdEnemy.SetActive(true);
-            fourthEnemy.SetActive(true);
-            secondEnemy.transform.position = new Vector3(levels[index].enemyPosition2.x, 0, levels[index].enemyPosition2.y);
-            thirdEnemy.transform.position = new Vector3(levels[index].enemyPosition3.x, 0, levels[index].enemyPosition3.y);
-            fourthEnemy.transform.position = new Vector3(levels[index].enemyPosition4.x, 0, levels[index].enemyPosition4.y);
-        }
-
     }
 
     
@@ -160,7 +166,7 @@ public class LevelManager : MonoBehaviour
         secondEnemyUI.SetActive(true);
         secondEnemyUI.transform.GetChild(1).GetComponent<Text>().text = secondEnemyPercent + "%";
 
-        playerPercentUI.transform.position = playerUI_Pos + playerUIOffset;
+        playerPercentUI.transform.position = playerUI_Pos + playerUI_Offset;
         playerPercentUI.SetActive(true);
         playerPercentUI.transform.GetChild(1).GetComponent<Text>().text = playerPercent + "%";
 

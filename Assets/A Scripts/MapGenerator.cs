@@ -8,10 +8,10 @@ public class MapGenerator : MonoBehaviour
 	public Vector2 MapSize { set; get; }
 
 	[Header("Tile Info")]
-
 	[Range(0, 1)] [SerializeField] private float outlinePercent;
 	[SerializeField] private Transform tilePrefab;
 	[SerializeField] private Transform tileHolder;
+
 	public static MapGenerator instance;
 
 	void Start()

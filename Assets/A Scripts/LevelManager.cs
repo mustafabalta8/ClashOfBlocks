@@ -35,6 +35,7 @@ public class LevelManager : MonoBehaviour
     [Header("Levels Array")]
     [SerializeField] private Level[] levels;
 
+    
 
     private int levelIndex = 0;
     private Vector3 playerUI_Offset = new Vector3(0, 1.35f, 1.2f);
@@ -45,7 +46,6 @@ public class LevelManager : MonoBehaviour
         if (instance == null) { instance = this; }
 
         CreateLevel();
-
     }
     
 
@@ -55,20 +55,24 @@ public class LevelManager : MonoBehaviour
 
         if (levels[levelIndex].enemyCount == 2)
         {
-            secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            StartSpreading(secondEnemy);
         }
         else if (levels[levelIndex].enemyCount == 3)
         {
-            secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
-            thirdEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            StartSpreading(secondEnemy);
+            StartSpreading(thirdEnemy);
         }
         else if (levels[levelIndex].enemyCount == 4)
         {
-            secondEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
-            thirdEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
-            fourthEnemy.GetComponent<Enemy>().StartSpreadingBlocks();
+            StartSpreading(secondEnemy);
+            StartSpreading(thirdEnemy);
+            StartSpreading(fourthEnemy);
         }
 
+    }
+    private void StartSpreading(GameObject enemy)
+    {
+        enemy.GetComponent<Enemy>().StartSpreadingBlocks();
     }
 
 
@@ -128,7 +132,7 @@ public class LevelManager : MonoBehaviour
         firstEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition1.x, 0, levels[levelIndex].enemyPosition1.y);
         switch (levels[levelIndex].enemyCount)
         {
-            case 1:
+            case 1:                
                 secondEnemy.SetActive(false);
                 thirdEnemy.SetActive(false);
                 fourthEnemy.SetActive(false);
@@ -137,40 +141,44 @@ public class LevelManager : MonoBehaviour
                 secondEnemy.SetActive(true);
                 thirdEnemy.SetActive(false);
                 fourthEnemy.SetActive(false);
-                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
+                SetEnemyPosition(secondEnemy, levels[levelIndex].enemyPosition2);
                 break;
             case 3:
                 secondEnemy.SetActive(true);
                 thirdEnemy.SetActive(true);
                 fourthEnemy.SetActive(false);
-                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
-                thirdEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition3.x, 0, levels[levelIndex].enemyPosition3.y);
+                SetEnemyPosition(secondEnemy, levels[levelIndex].enemyPosition2);
+                SetEnemyPosition(thirdEnemy, levels[levelIndex].enemyPosition3);
                 break;
             case 4:
                 secondEnemy.SetActive(true);
                 thirdEnemy.SetActive(true);
                 fourthEnemy.SetActive(true);
-                secondEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition2.x, 0, levels[levelIndex].enemyPosition2.y);
-                thirdEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition3.x, 0, levels[levelIndex].enemyPosition3.y);
-                fourthEnemy.transform.position = new Vector3(levels[levelIndex].enemyPosition4.x, 0, levels[levelIndex].enemyPosition4.y);
+                SetEnemyPosition(secondEnemy, levels[levelIndex].enemyPosition2);
+                SetEnemyPosition(thirdEnemy, levels[levelIndex].enemyPosition3);
+                SetEnemyPosition(fourthEnemy, levels[levelIndex].enemyPosition4);
                 break;
         }
+    }
+    private void SetEnemyPosition(GameObject enemy, Vector2 enemyPositon)
+    {
+        enemy.transform.position= new Vector3(enemyPositon.x, 0, enemyPositon.y);
     }
 
     
     public void ShowPercentsUI(int firstEnemyPercent, int secondEnemyPercent, int playerPercent, Vector3 playerUI_Pos )
     {
-        firstEnemyUI.SetActive(true);
-        firstEnemyUI.transform.GetChild(1).GetComponent<Text>().text = firstEnemyPercent + "%";
-
-        secondEnemyUI.SetActive(true);
-        secondEnemyUI.transform.GetChild(1).GetComponent<Text>().text = secondEnemyPercent + "%";
-
+        ShowPercentUI(firstEnemyUI, firstEnemyPercent);
+        ShowPercentUI(secondEnemyUI, secondEnemyPercent);
         playerPercentUI.transform.position = playerUI_Pos + playerUI_Offset;
-        playerPercentUI.SetActive(true);
-        playerPercentUI.transform.GetChild(1).GetComponent<Text>().text = playerPercent + "%";
+        ShowPercentUI(playerPercentUI, playerPercent);
 
-    }    
+    }
+    private void ShowPercentUI(GameObject blockUI, int percent)
+    {
+        blockUI.SetActive(true);
+        blockUI.transform.GetChild(1).GetComponent<Text>().text = percent + "%";
+    }
     private void DeletePreviousLevel()
     {
         firstEnemyUI.SetActive(false);

@@ -6,15 +6,17 @@ public class Block : MonoBehaviour
 {
     [SerializeField] private GameObject block;
     [SerializeField] private float raycastDistance = 1f;
-
+    [SerializeField] private float blockSpreadingSpeed = 0.2f;
     private GameObject blockKeeper;
+
+    private Vector3 blockScale = new Vector3(0.97f, 0.97f, 0.97f);
     private void Start()
     {
-        transform.localScale = new Vector3(0.97f, 0.97f, 0.97f);
+        transform.localScale = blockScale;
 
         blockKeeper = GameObject.Find("BlockKeeper");
 
-        Invoke("BlockCreator", 0.2f);
+        Invoke("BlockCreator", blockSpreadingSpeed);
         
     }   
     private void BlockCreator()

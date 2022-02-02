@@ -7,23 +7,23 @@ public class Tile : MonoBehaviour
     private bool isFilled = false;
 
     [SerializeField] private GameObject block;
+    private GameObject blockKeeper;
     public static int FilledTileCount{ set; get; }
     public static int TotalTileCount { set; get; }
-
-    private GameObject blockKeeper;
 
     public static int PlayerBlockCount { set; get; }
     public static int RedEnemyBlockCount { set; get; }
     public static int YellowEnemyBlockCount { set; get; }
 
     private static Vector3 playerStartingPosition;
+
+    [SerializeField] private float UIOpeningSpeedAfterLevelEnded = 0.22f;
     private void Start()
     {
         blockKeeper = GameObject.Find("BlockKeeper");
     }
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log($"Tile is triggerred by tag = {other.gameObject.tag} ");
         if (other.gameObject.tag == "Wall")
         {            
             Destroy(gameObject);
@@ -56,7 +56,6 @@ public class Tile : MonoBehaviour
             //Debug.Log("Block isFilled = true"); // -> important to count TotalTileCount 
             isFilled = true;
             FilledTileCount += 1;
-            //Debug.Log("other.gameObject.tag: "+ other.gameObject.tag);
             if (other.gameObject.tag == "Block")
             {
                 PlayerBlockCount++;
@@ -83,22 +82,19 @@ public class Tile : MonoBehaviour
         int playerPercent = 100 * PlayerBlockCount / TotalTileCount;
         int redEnemyPercent = 100 * RedEnemyBlockCount / TotalTileCount;
         int yellowEnemyPercent = 100 * YellowEnemyBlockCount / TotalTileCount;
-        // Debug.Log("playerPercent" + playerPercent);
-        // print("redEnemyPercent" + redEnemyPercent);
 
         LevelManager.instance.ShowPercentsUI(redEnemyPercent, yellowEnemyPercent,playerPercent,playerStartingPosition);
 
 
-        //Debug.LogWarning($"level ended\nFilledTileCount: {FilledTileCount}");
-
+        //Debug.LogWarning($"level ended\nFilledTileCount: {FilledTileCount}"); // to control total tile count
         if(playerPercent > redEnemyPercent && playerPercent > yellowEnemyPercent)
         {
-            Invoke("OpenWinUI", 0.3f);
+            Invoke("OpenWinUI", UIOpeningSpeedAfterLevelEnded);
 
         }
         else
         {
-            Invoke("OpenLoseUI", 0.3f);
+            Invoke("OpenLoseUI", UIOpeningSpeedAfterLevelEnded);
         }
         
         FilledTileCount = 0;

@@ -1306,6 +1306,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4759948797804357842, guid: 68798b9aace107d40bd1ba79c5707b73,
+        type: 3}
+      propertyPath: blockKeeper
+      value: 
+      objectReference: {fileID: 500137965}
     - target: {fileID: 4759948797804357854, guid: 68798b9aace107d40bd1ba79c5707b73,
         type: 3}
       propertyPath: m_RootOrder
@@ -1629,6 +1634,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5115115138162054966, guid: 347a484cbcccb6b4382ddcb23d0d3d76,
+        type: 3}
+      propertyPath: blockKeeper
+      value: 
+      objectReference: {fileID: 500137965}
     - target: {fileID: 5115115138162054970, guid: 347a484cbcccb6b4382ddcb23d0d3d76,
         type: 3}
       propertyPath: m_RootOrder
@@ -2116,6 +2126,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: YellowEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 4759948797804357842, guid: 68798b9aace107d40bd1ba79c5707b73,
+        type: 3}
+      propertyPath: blockKeeper
+      value: 
+      objectReference: {fileID: 500137965}
     - target: {fileID: 4759948797804357854, guid: 68798b9aace107d40bd1ba79c5707b73,
         type: 3}
       propertyPath: m_RootOrder
@@ -2607,6 +2622,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: RedEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5115115138162054966, guid: 347a484cbcccb6b4382ddcb23d0d3d76,
+        type: 3}
+      propertyPath: blockKeeper
+      value: 
+      objectReference: {fileID: 500137965}
     - target: {fileID: 5115115138162054970, guid: 347a484cbcccb6b4382ddcb23d0d3d76,
         type: 3}
       propertyPath: m_RootOrder
